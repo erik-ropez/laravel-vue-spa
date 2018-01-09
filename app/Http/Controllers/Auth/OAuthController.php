@@ -7,6 +7,7 @@ use App\OAuthProvider;
 use App\Http\Controllers\Controller;
 use Laravel\Socialite\Facades\Socialite;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
+use Illuminate\Support\Facades\Auth;
 
 class OAuthController extends Controller
 {
@@ -99,5 +100,15 @@ class OAuthController extends Controller
         return OAuthProvider::where('provider', $driver)
             ->where('provider_user_id', $userId)
             ->first();
+    }
+
+    /**
+     * Get the guard to be used during authentication.
+     *
+     * @return \Illuminate\Contracts\Auth\StatefulGuard
+     */
+    protected function guard()
+    {
+        return Auth::guard('api');
     }
 }
